@@ -156,6 +156,28 @@ bool verify_packet_integrity(struct icmphdr *icmp_header, int data_size) {
     return true;
 }
 
+// Clean up the socket between packets (NEW FUNCTION)
+void flush_socket(int sock) {
+    char temp_buffer[1024];
+    struct timeval no_wait = {0, 0}; // Non-blocking
+    fd_set read_set;
+    
+    // Check if there's any data to read
+    FD_ZERO(&read_set);
+    FD_SET(sock, &read_set);
+    
+    // Keep reading until socket is empty
+    while (select(sock + 1, &read_set, NULL, NULL, &no_wait) > 0) {
+        if (recv(sock, temp_buffer, sizeof(temp_buffer), MSG_DONTWAIT) <= 0) {
+            break; // Error or no more data
+        }
+        
+        // Reset for next check
+        FD_ZERO(&read_set);
+        FD_SET(sock, &read_set);
+    }
+}
+
 // Log message to file and stdout
 void log_message(const char *format, ...) {
     va_list args, args_copy;
@@ -404,6 +426,13 @@ int main(int argc, char *argv[]) {
         return EXIT_FAILURE;
     }
 
+    // Set socket receive buffer size (NEW CODE)
+    int rcvbufsize = 1024 * 1024; // 1MB buffer
+    if (setsockopt(sockfd, SOL_SOCKET, SO_RCVBUF, &rcvbufsize, sizeof(rcvbufsize)) < 0) {
+        perror("setsockopt SO_RCVBUF failed");
+        // Non-fatal, continue execution
+    }
+
     // Set TTL value
     if (setsockopt(sockfd, IPPROTO_IP, IP_TTL, &ttl, sizeof(ttl)) < 0) {
         perror("setsockopt IP_TTL failed");
@@ -465,6 +494,9 @@ int main(int argc, char *argv[]) {
     // Main ping loop
     int seq_num = 0;
     while (!stop_ping && (count == -1 || original_send_count < count)) {
+        // Flush socket before sending (NEW CODE)
+        flush_socket(sockfd);
+        
         // Prepare packet
         prepare_icmp_packet((struct icmphdr *)packet, seq_num, packet_size);
         
@@ -526,81 +558,134 @@ int main(int argc, char *argv[]) {
             FD_ZERO(&read_set);
             FD_SET(sockfd, &read_set);
             
-            // Wait up to timeout for data to be available
-            int ready = select(sockfd + 1, &read_set, NULL, NULL, &wait_time);
+            // Track when we started waiting (NEW CODE)
+            struct timeval wait_start;
+            gettimeofday(&wait_start, NULL);
+            
+            // Remaining wait time (NEW CODE)
+            struct timeval remaining_time = wait_time;
+            
+            // Keep trying to receive until timeout (NEW CODE)
+            while (!response_received) {
+                // Wait up to remaining time for data to be available
+                int ready = select(sockfd + 1, &read_set, NULL, NULL, &remaining_time);
                 
-            if (ready > 0) {
-                // Data is available to be read - try to receive it
+                // Check if we timed out
+                if (ready <= 0) {
+                    break; // Timeout or error
+                }
+                
+                // Try to receive
                 int bytes_received = recvfrom(sockfd, recv_packet, sizeof(recv_packet), 0,
                                           (struct sockaddr *)&recv_addr, &addr_len);
                 
-                if (bytes_received > 0) {
-                    // Record receive time
-                    struct timeval recv_time;
-                    gettimeofday(&recv_time, NULL);
-    
-                    // Calculate round-trip time in milliseconds
-                    double rtt = (recv_time.tv_sec - send_time.tv_sec) * 1000.0 +
-                                (recv_time.tv_usec - send_time.tv_usec) / 1000.0;
-    
-                    // Parse IP header and ICMP header
-                    struct iphdr *ip_header = (struct iphdr *)recv_packet;
-                    int ip_header_len = ip_header->ihl * 4;  // IP header length
-                    struct icmphdr *icmp_header = (struct icmphdr *)(recv_packet + ip_header_len);
-                    int data_size = bytes_received - ip_header_len - sizeof(struct icmphdr);
-    
-                    // Check if it's our echo reply
-                    if (icmp_header->type == ICMP_ECHOREPLY &&
-                        icmp_header->un.echo.id == ident &&
-                        icmp_header->un.echo.sequence == seq_num) {
-                        
-                        recv_count++;
-                        packet_received = true;
-                        response_received = true;
-    
-                        // Verify checksum and data integrity
-                        bool checksum_valid = verify_checksum((unsigned short *)icmp_header, 
-                                                            bytes_received - ip_header_len);
-                        bool data_valid = verify_packet_integrity(icmp_header, data_size);
-                        bool is_corrupted = !checksum_valid || !data_valid;
-                        
-                        if (is_corrupted) {
-                            corrupt_count++;
-                        }
-                        
-                        // Update packet history
-                        update_packet_history(seq_num, rtt, is_corrupted);
-    
-                        // Print information
-                        log_message("%d bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms %s\n",
-                                   bytes_received - ip_header_len,
-                                   inet_ntoa(recv_addr.sin_addr),
-                                   icmp_header->un.echo.sequence,
-                                   ip_header->ttl,
-                                   rtt,
-                                   is_corrupted ? "[CORRUPTED]" : "");
-                        
-                        if (is_corrupted) {
-                            log_message("  Corruption details: checksum=%s, data=%s\n",
-                                       checksum_valid ? "valid" : "invalid",
-                                       data_valid ? "valid" : "invalid");
-                        }
-                    }
-                    else if (icmp_header->type == ICMP_DEST_UNREACH) {
-                        // Handle destination unreachable message
-                        log_message("From %s: Destination unreachable (code=%d) for icmp_seq=%d\n",
-                                  inet_ntoa(recv_addr.sin_addr),
-                                  icmp_header->code,
-                                  seq_num);
-                    }
-                    else if (icmp_header->type == ICMP_TIME_EXCEEDED) {
-                        // Handle time exceeded message
-                        log_message("From %s: Time to live exceeded for icmp_seq=%d\n",
-                                  inet_ntoa(recv_addr.sin_addr),
-                                  seq_num);
-                    }
-                    // Other ICMP message types can be handled here if needed
+                if (bytes_received <= 0) {
+                    continue; // Error receiving packet, try again
                 }
+                
+                // Record receive time
+                struct timeval recv_time;
+                gettimeofday(&recv_time, NULL);
+                
+                // Calculate round-trip time in milliseconds
+                double rtt = (recv_time.tv_sec - send_time.tv_sec) * 1000.0 +
+                            (recv_time.tv_usec - send_time.tv_usec) / 1000.0;
+                
+                // Parse IP header and ICMP header
+                struct iphdr *ip_header = (struct iphdr *)recv_packet;
+                int ip_header_len = ip_header->ihl * 4;  // IP header length
+                
+                // Validate we have enough data for an ICMP header
+                if (bytes_received < ip_header_len + sizeof(struct icmphdr)) {
+                    continue; // Packet too small, try again
+                }
+                
+                struct icmphdr *icmp_header = (struct icmphdr *)(recv_packet + ip_header_len);
+                int data_size = bytes_received - ip_header_len - sizeof(struct icmphdr);
+                
+                // Check if it's our echo reply - STRICT VALIDATION
+                if (icmp_header->type == ICMP_ECHOREPLY &&
+                    icmp_header->un.echo.id == ident &&
+                    icmp_header->un.echo.sequence == seq_num &&
+                    recv_addr.sin_addr.s_addr == dest_addr.sin_addr.s_addr) {
+                    
+                    // Sanity check for RTT - reject impossibly fast responses
+                    // Even loopback shouldn't be less than ~0.05ms
+                    if (rtt < 0.05 && strcmp(inet_ntoa(recv_addr.sin_addr), "127.0.0.1") != 0) {
+                        log_message("Suspicious RTT (%.3f ms) from %s for icmp_seq=%d - ignoring\n",
+                                  rtt, inet_ntoa(recv_addr.sin_addr), seq_num);
+                        continue; // Try for another packet
+                    }
+                    
+                    recv_count++;
+                    packet_received = true;
+                    response_received = true;
+                    
+                    // Verify checksum and data integrity
+                    bool checksum_valid = verify_checksum((unsigned short *)icmp_header, 
+                                                        bytes_received - ip_header_len);
+                    bool data_valid = data_size > 0 ? 
+                                      verify_packet_integrity(icmp_header, data_size) : true;
+                    bool is_corrupted = !checksum_valid || !data_valid;
+                    
+                    if (is_corrupted) {
+                        corrupt_count++;
+                    }
+                    
+                    // Update packet history
+                    update_packet_history(seq_num, rtt, is_corrupted);
+                    
+                    // Print information
+                    log_message("%d bytes from %s: icmp_seq=%d ttl=%d time=%.3f ms %s\n",
+                               bytes_received - ip_header_len,
+                               inet_ntoa(recv_addr.sin_addr),
+                               icmp_header->un.echo.sequence,
+                               ip_header->ttl,
+                               rtt,
+                               is_corrupted ? "[CORRUPTED]" : "");
+                    
+                    if (is_corrupted) {
+                        log_message("  Corruption details: checksum=%s, data=%s\n",
+                                   checksum_valid ? "valid" : "invalid",
+                                   data_valid ? "valid" : "invalid");
+                    }
+                }
+                else if (icmp_header->type == ICMP_DEST_UNREACH) {
+                    // Handle destination unreachable message
+                    log_message("From %s: Destination unreachable (code=%d) for icmp_seq=%d\n",
+                              inet_ntoa(recv_addr.sin_addr),
+                              icmp_header->code,
+                              seq_num);
+                }
+                else if (icmp_header->type == ICMP_TIME_EXCEEDED) {
+                    // Handle time exceeded message
+                    log_message("From %s: Time to live exceeded for icmp_seq=%d\n",
+                              inet_ntoa(recv_addr.sin_addr),
+                              seq_num);
+                }
+                
+                // Calculate remaining wait time
+                struct timeval current_time;
+                gettimeofday(&current_time, NULL);
+                
+                // Calculate elapsed time
+                long elapsed_usec = (current_time.tv_sec - wait_start.tv_sec) * 1000000 + 
+                                    (current_time.tv_usec - wait_start.tv_usec);
+                
+                // Calculate remaining time
+                long remaining_usec = timeout * 1000000 - elapsed_usec;
+                
+                if (remaining_usec <= 0) {
+                    break; // We've exceeded our timeout
+                }
+                
+                // Update remaining_time for next select call
+                remaining_time.tv_sec = remaining_usec / 1000000;
+                remaining_time.tv_usec = remaining_usec % 1000000;
+                
+                // Reset fd_set for next select call
+                FD_ZERO(&read_set);
+                FD_SET(sockfd, &read_set);
             }
             
             if (!response_received) {
