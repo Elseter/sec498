@@ -1,0 +1,64 @@
+PING 192.168.122.34 (192.168.122.34): 504 bytes of data with standard mode
+512 bytes from 192.168.122.34: icmp_seq=0 ttl=64 time=0.645 ms 
+512 bytes from 192.168.122.34: icmp_seq=1 ttl=64 time=0.511 ms 
+512 bytes from 192.168.122.34: icmp_seq=2 ttl=64 time=0.452 ms 
+512 bytes from 192.168.122.34: icmp_seq=3 ttl=64 time=0.448 ms 
+512 bytes from 192.168.122.34: icmp_seq=4 ttl=64 time=0.501 ms 
+512 bytes from 192.168.122.34: icmp_seq=5 ttl=64 time=0.426 ms 
+512 bytes from 192.168.122.34: icmp_seq=6 ttl=64 time=0.583 ms 
+512 bytes from 192.168.122.34: icmp_seq=7 ttl=64 time=0.475 ms 
+512 bytes from 192.168.122.34: icmp_seq=8 ttl=64 time=0.526 ms 
+512 bytes from 192.168.122.34: icmp_seq=9 ttl=64 time=0.529 ms 
+512 bytes from 192.168.122.34: icmp_seq=10 ttl=64 time=0.515 ms 
+512 bytes from 192.168.122.34: icmp_seq=11 ttl=64 time=0.695 ms 
+512 bytes from 192.168.122.34: icmp_seq=12 ttl=64 time=0.407 ms 
+512 bytes from 192.168.122.34: icmp_seq=13 ttl=64 time=0.348 ms 
+512 bytes from 192.168.122.34: icmp_seq=14 ttl=64 time=0.361 ms 
+512 bytes from 192.168.122.34: icmp_seq=15 ttl=64 time=0.387 ms 
+512 bytes from 192.168.122.34: icmp_seq=16 ttl=64 time=0.335 ms 
+512 bytes from 192.168.122.34: icmp_seq=17 ttl=64 time=0.284 ms 
+512 bytes from 192.168.122.34: icmp_seq=18 ttl=64 time=0.351 ms 
+512 bytes from 192.168.122.34: icmp_seq=19 ttl=64 time=0.245 ms 
+512 bytes from 192.168.122.34: icmp_seq=20 ttl=64 time=0.319 ms 
+512 bytes from 192.168.122.34: icmp_seq=21 ttl=64 time=0.313 ms 
+512 bytes from 192.168.122.34: icmp_seq=22 ttl=64 time=0.317 ms 
+512 bytes from 192.168.122.34: icmp_seq=23 ttl=64 time=0.286 ms 
+512 bytes from 192.168.122.34: icmp_seq=24 ttl=64 time=0.486 ms 
+512 bytes from 192.168.122.34: icmp_seq=25 ttl=64 time=0.491 ms 
+512 bytes from 192.168.122.34: icmp_seq=26 ttl=64 time=0.472 ms 
+512 bytes from 192.168.122.34: icmp_seq=27 ttl=64 time=0.402 ms 
+512 bytes from 192.168.122.34: icmp_seq=28 ttl=64 time=0.459 ms 
+512 bytes from 192.168.122.34: icmp_seq=29 ttl=64 time=0.518 ms 
+512 bytes from 192.168.122.34: icmp_seq=30 ttl=64 time=0.430 ms 
+512 bytes from 192.168.122.34: icmp_seq=31 ttl=64 time=0.391 ms 
+512 bytes from 192.168.122.34: icmp_seq=32 ttl=64 time=0.413 ms 
+512 bytes from 192.168.122.34: icmp_seq=33 ttl=64 time=0.532 ms 
+512 bytes from 192.168.122.34: icmp_seq=34 ttl=64 time=0.391 ms 
+512 bytes from 192.168.122.34: icmp_seq=35 ttl=64 time=0.260 ms 
+512 bytes from 192.168.122.34: icmp_seq=36 ttl=64 time=0.175 ms 
+Suspicious RTT (0.049 ms) from 192.168.122.34 for icmp_seq=37 - ignoring
+From 192.168.68.52: Destination unreachable (code=1) for icmp_seq=37
+From 192.168.68.52: Destination unreachable (code=1) for icmp_seq=37
+Request timeout for icmp_seq=37 (try 1/4)
+Retrying seq=37 (attempt 1/3)
+512 bytes from 192.168.122.34: icmp_seq=37 ttl=64 time=0.559 ms 
+512 bytes from 192.168.122.34: icmp_seq=38 ttl=64 time=0.455 ms 
+512 bytes from 192.168.122.34: icmp_seq=39 ttl=64 time=0.468 ms 
+512 bytes from 192.168.122.34: icmp_seq=40 ttl=64 time=0.360 ms 
+512 bytes from 192.168.122.34: icmp_seq=41 ttl=64 time=0.400 ms 
+512 bytes from 192.168.122.34: icmp_seq=42 ttl=64 time=0.388 ms 
+512 bytes from 192.168.122.34: icmp_seq=43 ttl=64 time=0.298 ms 
+512 bytes from 192.168.122.34: icmp_seq=44 ttl=64 time=0.384 ms 
+512 bytes from 192.168.122.34: icmp_seq=45 ttl=64 time=0.266 ms 
+512 bytes from 192.168.122.34: icmp_seq=46 ttl=64 time=0.314 ms 
+512 bytes from 192.168.122.34: icmp_seq=47 ttl=64 time=0.292 ms 
+512 bytes from 192.168.122.34: icmp_seq=48 ttl=64 time=0.301 ms 
+512 bytes from 192.168.122.34: icmp_seq=49 ttl=64 time=0.249 ms 
+
+--- Ping Statistics ---
+Total packets: 50 original, 51 including retries
+Received: 50 (0.0% packet loss)
+Retransmitted: 1
+Received after retry: 1
+Corrupted packets: 0
+RTT min/avg/max = 0.175/0.408/0.695 ms
