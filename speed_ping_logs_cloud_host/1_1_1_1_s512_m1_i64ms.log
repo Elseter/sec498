@@ -1,0 +1,59 @@
+PING 1.1.1.1 (1.1.1.1): 504 bytes of data with standard mode
+512 bytes from 1.1.1.1: icmp_seq=0 ttl=57 time=19.119 ms 
+512 bytes from 1.1.1.1: icmp_seq=1 ttl=57 time=16.775 ms 
+512 bytes from 1.1.1.1: icmp_seq=2 ttl=57 time=18.652 ms 
+512 bytes from 1.1.1.1: icmp_seq=3 ttl=57 time=17.134 ms 
+512 bytes from 1.1.1.1: icmp_seq=4 ttl=57 time=19.654 ms 
+512 bytes from 1.1.1.1: icmp_seq=5 ttl=57 time=21.906 ms 
+512 bytes from 1.1.1.1: icmp_seq=6 ttl=57 time=18.431 ms 
+512 bytes from 1.1.1.1: icmp_seq=7 ttl=57 time=18.847 ms 
+512 bytes from 1.1.1.1: icmp_seq=8 ttl=57 time=19.247 ms 
+512 bytes from 1.1.1.1: icmp_seq=9 ttl=57 time=19.039 ms 
+512 bytes from 1.1.1.1: icmp_seq=10 ttl=57 time=17.373 ms 
+512 bytes from 1.1.1.1: icmp_seq=11 ttl=57 time=18.009 ms 
+512 bytes from 1.1.1.1: icmp_seq=12 ttl=57 time=17.502 ms 
+512 bytes from 1.1.1.1: icmp_seq=13 ttl=57 time=18.263 ms 
+512 bytes from 1.1.1.1: icmp_seq=14 ttl=57 time=17.536 ms 
+512 bytes from 1.1.1.1: icmp_seq=15 ttl=57 time=19.068 ms 
+512 bytes from 1.1.1.1: icmp_seq=16 ttl=57 time=18.975 ms 
+512 bytes from 1.1.1.1: icmp_seq=17 ttl=57 time=16.589 ms 
+512 bytes from 1.1.1.1: icmp_seq=18 ttl=57 time=19.390 ms 
+512 bytes from 1.1.1.1: icmp_seq=19 ttl=57 time=17.822 ms 
+512 bytes from 1.1.1.1: icmp_seq=20 ttl=57 time=17.609 ms 
+512 bytes from 1.1.1.1: icmp_seq=21 ttl=57 time=19.325 ms 
+512 bytes from 1.1.1.1: icmp_seq=22 ttl=57 time=17.188 ms 
+512 bytes from 1.1.1.1: icmp_seq=23 ttl=57 time=18.430 ms 
+512 bytes from 1.1.1.1: icmp_seq=24 ttl=57 time=17.414 ms 
+512 bytes from 1.1.1.1: icmp_seq=25 ttl=57 time=18.697 ms 
+512 bytes from 1.1.1.1: icmp_seq=26 ttl=57 time=16.460 ms 
+512 bytes from 1.1.1.1: icmp_seq=27 ttl=57 time=18.710 ms 
+512 bytes from 1.1.1.1: icmp_seq=28 ttl=57 time=28.786 ms 
+512 bytes from 1.1.1.1: icmp_seq=29 ttl=57 time=19.040 ms 
+512 bytes from 1.1.1.1: icmp_seq=30 ttl=57 time=16.845 ms 
+512 bytes from 1.1.1.1: icmp_seq=31 ttl=57 time=18.762 ms 
+512 bytes from 1.1.1.1: icmp_seq=32 ttl=57 time=16.981 ms 
+512 bytes from 1.1.1.1: icmp_seq=33 ttl=57 time=19.481 ms 
+512 bytes from 1.1.1.1: icmp_seq=34 ttl=57 time=16.136 ms 
+512 bytes from 1.1.1.1: icmp_seq=35 ttl=57 time=19.436 ms 
+512 bytes from 1.1.1.1: icmp_seq=36 ttl=57 time=16.993 ms 
+512 bytes from 1.1.1.1: icmp_seq=37 ttl=57 time=19.230 ms 
+512 bytes from 1.1.1.1: icmp_seq=38 ttl=57 time=21.931 ms 
+512 bytes from 1.1.1.1: icmp_seq=39 ttl=57 time=17.668 ms 
+512 bytes from 1.1.1.1: icmp_seq=40 ttl=57 time=18.435 ms 
+512 bytes from 1.1.1.1: icmp_seq=41 ttl=57 time=16.975 ms 
+512 bytes from 1.1.1.1: icmp_seq=42 ttl=57 time=18.785 ms 
+512 bytes from 1.1.1.1: icmp_seq=43 ttl=57 time=21.054 ms 
+512 bytes from 1.1.1.1: icmp_seq=44 ttl=57 time=19.401 ms 
+512 bytes from 1.1.1.1: icmp_seq=45 ttl=57 time=18.555 ms 
+512 bytes from 1.1.1.1: icmp_seq=46 ttl=57 time=18.539 ms 
+512 bytes from 1.1.1.1: icmp_seq=47 ttl=57 time=18.096 ms 
+512 bytes from 1.1.1.1: icmp_seq=48 ttl=57 time=19.262 ms 
+512 bytes from 1.1.1.1: icmp_seq=49 ttl=57 time=16.537 ms 
+
+--- Ping Statistics ---
+Total packets: 50 original, 50 including retries
+Received: 50 (0.0% packet loss)
+Retransmitted: 0
+Received after retry: 0
+Corrupted packets: 0
+RTT min/avg/max = 16.136/18.602/28.786 ms
