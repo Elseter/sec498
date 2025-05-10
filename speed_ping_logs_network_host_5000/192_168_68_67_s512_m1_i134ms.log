@@ -1,0 +1,59 @@
+PING 192.168.68.67 (192.168.68.67): 504 bytes of data with standard mode
+512 bytes from 192.168.68.67: icmp_seq=0 ttl=64 time=4.963 ms 
+512 bytes from 192.168.68.67: icmp_seq=1 ttl=64 time=7.442 ms 
+512 bytes from 192.168.68.67: icmp_seq=2 ttl=64 time=79.922 ms 
+512 bytes from 192.168.68.67: icmp_seq=3 ttl=64 time=4.799 ms 
+512 bytes from 192.168.68.67: icmp_seq=4 ttl=64 time=3.567 ms 
+512 bytes from 192.168.68.67: icmp_seq=5 ttl=64 time=6.157 ms 
+512 bytes from 192.168.68.67: icmp_seq=6 ttl=64 time=4.859 ms 
+512 bytes from 192.168.68.67: icmp_seq=7 ttl=64 time=4.866 ms 
+512 bytes from 192.168.68.67: icmp_seq=8 ttl=64 time=88.112 ms 
+512 bytes from 192.168.68.67: icmp_seq=9 ttl=64 time=6.543 ms 
+512 bytes from 192.168.68.67: icmp_seq=10 ttl=64 time=4.996 ms 
+512 bytes from 192.168.68.67: icmp_seq=11 ttl=64 time=100.514 ms 
+512 bytes from 192.168.68.67: icmp_seq=12 ttl=64 time=5.412 ms 
+512 bytes from 192.168.68.67: icmp_seq=13 ttl=64 time=4.129 ms 
+512 bytes from 192.168.68.67: icmp_seq=14 ttl=64 time=99.769 ms 
+512 bytes from 192.168.68.67: icmp_seq=15 ttl=64 time=6.224 ms 
+512 bytes from 192.168.68.67: icmp_seq=16 ttl=64 time=5.685 ms 
+512 bytes from 192.168.68.67: icmp_seq=17 ttl=64 time=97.238 ms 
+512 bytes from 192.168.68.67: icmp_seq=18 ttl=64 time=4.754 ms 
+512 bytes from 192.168.68.67: icmp_seq=19 ttl=64 time=6.596 ms 
+512 bytes from 192.168.68.67: icmp_seq=20 ttl=64 time=97.706 ms 
+512 bytes from 192.168.68.67: icmp_seq=21 ttl=64 time=6.476 ms 
+512 bytes from 192.168.68.67: icmp_seq=22 ttl=64 time=5.302 ms 
+512 bytes from 192.168.68.67: icmp_seq=23 ttl=64 time=97.816 ms 
+512 bytes from 192.168.68.67: icmp_seq=24 ttl=64 time=6.938 ms 
+512 bytes from 192.168.68.67: icmp_seq=25 ttl=64 time=6.586 ms 
+512 bytes from 192.168.68.67: icmp_seq=26 ttl=64 time=89.680 ms 
+512 bytes from 192.168.68.67: icmp_seq=27 ttl=64 time=7.177 ms 
+512 bytes from 192.168.68.67: icmp_seq=28 ttl=64 time=5.273 ms 
+512 bytes from 192.168.68.67: icmp_seq=29 ttl=64 time=4.566 ms 
+512 bytes from 192.168.68.67: icmp_seq=30 ttl=64 time=3.152 ms 
+512 bytes from 192.168.68.67: icmp_seq=31 ttl=64 time=2.795 ms 
+512 bytes from 192.168.68.67: icmp_seq=32 ttl=64 time=5.443 ms 
+512 bytes from 192.168.68.67: icmp_seq=33 ttl=64 time=2.797 ms 
+512 bytes from 192.168.68.67: icmp_seq=34 ttl=64 time=2.645 ms 
+512 bytes from 192.168.68.67: icmp_seq=35 ttl=64 time=4.017 ms 
+512 bytes from 192.168.68.67: icmp_seq=36 ttl=64 time=3.651 ms 
+512 bytes from 192.168.68.67: icmp_seq=37 ttl=64 time=4.712 ms 
+512 bytes from 192.168.68.67: icmp_seq=38 ttl=64 time=89.883 ms 
+512 bytes from 192.168.68.67: icmp_seq=39 ttl=64 time=3.983 ms 
+512 bytes from 192.168.68.67: icmp_seq=40 ttl=64 time=5.546 ms 
+512 bytes from 192.168.68.67: icmp_seq=41 ttl=64 time=97.582 ms 
+512 bytes from 192.168.68.67: icmp_seq=42 ttl=64 time=2.456 ms 
+512 bytes from 192.168.68.67: icmp_seq=43 ttl=64 time=4.622 ms 
+512 bytes from 192.168.68.67: icmp_seq=44 ttl=64 time=102.283 ms 
+512 bytes from 192.168.68.67: icmp_seq=45 ttl=64 time=6.220 ms 
+512 bytes from 192.168.68.67: icmp_seq=46 ttl=64 time=5.016 ms 
+512 bytes from 192.168.68.67: icmp_seq=47 ttl=64 time=99.576 ms 
+512 bytes from 192.168.68.67: icmp_seq=48 ttl=64 time=3.597 ms 
+512 bytes from 192.168.68.67: icmp_seq=49 ttl=64 time=5.234 ms 
+
+--- Ping Statistics ---
+Total packets: 50 original, 50 including retries
+Received: 50 (0.0% packet loss)
+Retransmitted: 0
+Received after retry: 0
+Corrupted packets: 0
+RTT min/avg/max = 2.456/26.586/102.283 ms
