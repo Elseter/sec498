@@ -114,4 +114,3 @@ RTT min/avg/max = 0.456/0.534/0.789 ms
 
 ## Acknowledgements
 - Based on original code by Riley King
-
